@@ -18,6 +18,16 @@ from funciones import *
 
 
 def main():
+    """
+    Main function of the program.
+
+    It initializes the game variables and controls the main game loop.
+    The function manages the turn-based interaction between the player
+    and the enemy until one of them reaches 0 HP.
+
+    It also handles turn validation, updates the game state, and
+    displays the final result (win or lose).
+    """
     # Initialize game variables
     hp_heroe = config.HP_HEROE
     hp_enemigo = config.HP_ENEMIGO
