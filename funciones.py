@@ -26,13 +26,49 @@ def generate_damage(minimum, maximum):
     return random.randint(minimum, maximum)
 
 
+def hero_hp_bar(hero_hp):
+    """
+    Generates a visual health bar for the hero.
+
+    It calculates the proportion of the hero's current HP relative to
+    the maximum HP and represents it using a fixed-size bar composed
+    of filled (#) and empty (-) blocks.
+
+    Returns:
+    A string representing the hero's health bar.
+    """
+    size_bar=20
+    percent= hero_hp/config.HERO_HP
+    blocks= int(percent*size_bar)
+    void=size_bar-blocks
+    bar_h="#"*blocks + "-"*void
+    return bar_h
+
+def enemy_hp_bar(enemy_hp):
+    """
+    Generates a visual health bar for the enemy.
+
+    It calculates the proportion of the enemy's current HP relative to
+    the maximum HP and represents it using a fixed-size bar composed
+    of filled (#) and empty (-) blocks.
+
+    Returns:
+    A string representing the enemy's health bar.
+    """
+    size_bar=20
+    percent= enemy_hp/config.ENEMY_HP
+    blocks= int(percent*size_bar)
+    void=size_bar-blocks
+    bar_e="#"*blocks + "-"*void
+    return bar_e
+
 def show_status(hero_name, hero_hp, enemy_name, enemy_hp):
     """
     Displays the current health points (HP) of both the hero and the enemy.
     """
     print("\n--- CURRENT STATUS ---")
-    print(f"{hero_name}: {hero_hp} HP")
-    print(f"{enemy_name}: {enemy_hp} HP")
+    print(f"{hero_name}: [{hero_hp_bar(hero_hp)}] {hero_hp} HP")
+    print(f"{enemy_name}: [{enemy_hp_bar(enemy_hp)}] {enemy_hp} HP")
     print("---------------------\n")
 
 

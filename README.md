@@ -70,12 +70,12 @@ python main.py
 * Input validation (prevents invalid actions)
 * Modular code structure using multiple files
 * Simple and clean terminal interface
+* Visual health bar system for both hero and enemy
 
 ---
 
 ## 🚀 Possible Improvements
 
-* Add a visual health bar
 * Implement critical hits (10% chance)
 * Add enemy AI (healing behavior)
 * Let the player choose a name
