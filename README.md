@@ -76,7 +76,6 @@ python main.py
 
 ## 🚀 Possible Improvements
 
-* Add a visual health bar
 * Implement critical hits (10% chance)
 * Add enemy AI (healing behavior)
 * Let the player choose a name
