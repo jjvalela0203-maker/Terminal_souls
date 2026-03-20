@@ -19,7 +19,6 @@ Authors: Juan Jose Varela and Carlos Aponte
 import random
 import config
 
-
 def generate_damage(minimum, maximum):
     """
     Generates a random damage value between a minimum and maximum range.
@@ -54,6 +53,9 @@ def player_turn(enemy_hp, potions, hero_hp):
         print(f"You attacked and dealt {damage} damage!")
 
     elif option == "2":
+        if hero_hp == 100:
+            print("You are already at full health")
+            return enemy_hp, potions, hero_hp, False
         if potions > 0:
             hero_hp += config.HEAL_AMOUNT
             potions -= 1
