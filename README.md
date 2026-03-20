@@ -70,6 +70,7 @@ python main.py
 * Input validation (prevents invalid actions)
 * Modular code structure using multiple files
 * Simple and clean terminal interface
+* Visual health bar system for both hero and enemy
 
 ---
 
