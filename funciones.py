@@ -13,100 +13,83 @@ The functions defined here are responsible for:
 - Simulating the enemy's behavior
 - Checking win/lose conditions
 
-Authors: Juan Jose Varela and Carlos Aponte"""
-
-
+Authors: Juan Jose Varela and Carlos Aponte
+"""
 
 import random
 import config
 
 
-def generar_dano(minimo, maximo):
+def generate_damage(minimum, maximum):
     """
     Generates a random damage value between a minimum and maximum range.
     """
-    return random.randint(minimo, maximo)
+    return random.randint(minimum, maximum)
 
-def mostrar_estado(nombre_h, hp_h, nombre_e, hp_e):
+
+def show_status(hero_name, hero_hp, enemy_name, enemy_hp):
     """
     Displays the current health points (HP) of both the hero and the enemy.
     """
     print("\n--- CURRENT STATUS ---")
-    print(f"{nombre_h}: {hp_h} HP")
-    print(f"{nombre_e}: {hp_e} HP")
+    print(f"{hero_name}: {hero_hp} HP")
+    print(f"{enemy_name}: {enemy_hp} HP")
     print("---------------------\n")
 
-def turno_jugador(hp_enemigo, pociones, hp_heroe):
+
+def player_turn(enemy_hp, potions, hero_hp):
     """
     Handles the player's turn.
-    
-    The player can choose between:
-    1. Attack
-    2. Heal
-    3. Special ability
-
-    Returns updated values of:
-    - Enemy HP
-    - Remaining potions
-    - Hero HP
-    - A boolean indicating if the turn was valid
     """
 
     print("1. Attack")
     print("2. Heal")
-    print("3. Ultimate")
+    print("3. Special Ability")
 
-    opcion = input("Choose an action: ")
+    option = input("Choose an action: ")
 
-    # Option 1: Normal attack
-    if opcion == "1":
-        daño = generar_dano(config.DAÑO_HEROE_MIN, config.DAÑO_HEROE_MAX)
-        hp_enemigo -= daño
-        print(f"You attacked and dealt {daño} damage!")
-    # Option 2: Heal
-    elif opcion == "2":
-        if pociones > 0:
-            hp_heroe += config.CURACION
-            pociones -= 1
+    if option == "1":
+        damage = generate_damage(config.HERO_DAMAGE_MIN, config.HERO_DAMAGE_MAX)
+        enemy_hp -= damage
+        print(f"You attacked and dealt {damage} damage!")
+
+    elif option == "2":
+        if potions > 0:
+            hero_hp += config.HEAL_AMOUNT
+            potions -= 1
             print("You healed 20 HP")
-            print(f"You have {pociones} potions")
+            print(f"You have {potions} potions left")
         else:
             print("No potions left")
-            return hp_enemigo, pociones, hp_heroe, False
-    # Option 3: Special ability (50% chance to fail)
-    elif opcion == "3":
+            return enemy_hp, potions, hero_hp, False
+
+    elif option == "3":
         if random.random() < 0.5:
-            daño = generar_dano(config.DAÑO_ESPECIAL_MIN, config.DAÑO_ESPECIAL_MAX)
-            hp_enemigo -= daño
-            print(f"Special attack successful! {daño} damage")
+            damage = generate_damage(config.SPECIAL_DAMAGE_MIN, config.SPECIAL_DAMAGE_MAX)
+            enemy_hp -= damage
+            print(f"Special attack successful! {damage} damage")
         else:
-            print("You fail the ultimate ")
-    # Invalid option
+            print("Special attack failed")
+
     else:
         print("Invalid option")
-        return hp_enemigo, pociones, hp_heroe, False
+        return enemy_hp, potions, hero_hp, False
 
-    return hp_enemigo, pociones, hp_heroe, True
+    return enemy_hp, potions, hero_hp, True
 
 
-def turno_enemigo(hp_heroe):
+def enemy_turn(hero_hp):
     """
     Handles the enemy's turn.
-    
-    The enemy automatically attacks the hero and deals random damage.
-    
-    Returns updated hero HP.
     """
-    daño = generar_dano(config.DAÑO_ENEMIGO_MIN, config.DAÑO_ENEMIGO_MAX)
-    hp_heroe -= daño
-    print(f"The enemy dealt {daño} damage ")
-    return hp_heroe
+    damage = generate_damage(config.ENEMY_DAMAGE_MIN, config.ENEMY_DAMAGE_MAX)
+    hero_hp -= damage
+    print(f"The enemy dealt {damage} damage")
+    return hero_hp
 
 
-def verificar_ganador(hp_h, hp_e):
+def check_winner(hero_hp, enemy_hp):
     """
     Checks if the game has ended.
-    
-    Returns True if either the hero or the enemy has 0 or less HP.
     """
-    return hp_h <= 0 or hp_e <= 0
+    return hero_hp <= 0 or enemy_hp <= 0

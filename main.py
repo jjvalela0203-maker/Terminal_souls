@@ -6,10 +6,6 @@ This is the main entry point of the "Terminal Souls" game.
 It controls the game loop, manages the flow of turns between
 the player and the enemy, and determines when the game ends.
 
-The program repeatedly executes player and enemy turns until
-one of them reaches 0 HP. It also displays the current game
-status and the final result.
-
 Authors: Juan Jose Varela and Carlos Aponte
 """
 
@@ -20,53 +16,37 @@ from funciones import *
 def main():
     """
     Main function of the program.
-
-    It initializes the game variables and controls the main game loop.
-    The function manages the turn-based interaction between the player
-    and the enemy until one of them reaches 0 HP.
-
-    It also handles turn validation, updates the game state, and
-    displays the final result (win or lose).
     """
-    # Initialize game variables
-    hp_heroe = config.HP_HEROE
-    hp_enemigo = config.HP_ENEMIGO
-    pociones = config.POCIONES
-    turno = 1  # Turn counter
 
-    # Main game loop
-    while not verificar_ganador(hp_heroe, hp_enemigo):
-        print(f"\n--- TURN {turno} ---")
+    hero_hp = config.HERO_HP
+    enemy_hp = config.ENEMY_HP
+    potions = config.POTIONS
+    turn = 1
 
-        # Show current status
-        mostrar_estado("Hero", hp_heroe, "Enemy", hp_enemigo)
+    while not check_winner(hero_hp, enemy_hp):
+        print(f"\n--- TURN {turn} ---")
 
-        # Player turn
-        hp_enemigo, pociones, hp_heroe, turno_valido = turno_jugador(
-            hp_enemigo, pociones, hp_heroe
+        show_status("Hero", hero_hp, "Enemy", enemy_hp)
+
+        enemy_hp, potions, hero_hp, valid_turn = player_turn(
+            enemy_hp, potions, hero_hp
         )
 
-        # If the action was invalid, repeat the turn
-        if not turno_valido:
+        if not valid_turn:
             continue
 
-        # Check if the game ended after player's turn
-        if verificar_ganador(hp_heroe, hp_enemigo):
+        if check_winner(hero_hp, enemy_hp):
             break
 
-        # Enemy turn
-        hp_heroe = turno_enemigo(hp_heroe)
+        hero_hp = enemy_turn(hero_hp)
 
-        # Increase turn counter
-        turno += 1
+        turn += 1
 
-    # Final result
-    if hp_heroe > 0:
+    if hero_hp > 0:
         print("🎉 You Win!")
     else:
         print("💀 You Lose...")
 
 
-# Entry point of the program
 if __name__ == "__main__":
     main()
